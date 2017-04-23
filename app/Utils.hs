@@ -1,4 +1,4 @@
-{-# LANGUAGE TypeSynonymInstances, FlexibleInstances, UndecidableInstances, OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Utils where
 

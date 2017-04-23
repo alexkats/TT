@@ -1,7 +1,10 @@
 module Main where
 
-import           Grammar ()
-import           Utils   ()
+import           Evaluation
+import           Expression
+import           Grammar
+import           TypeInference
+import           Utils
 
 main :: IO ()
 main = putStrLn "Hello"

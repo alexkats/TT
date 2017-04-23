@@ -16,7 +16,7 @@ data Lambda = Var VarName
 instance Show Lambda where
     show (Var v)      = C.unpack v
     show (Lambda v e) = "\\" ++ C.unpack v ++ "." ++ show e
-    show (a :+ b)    = bracketed isLambda a ++ " " ++ bracketed isNotVar b
+    show (a :+ b)     = bracketed isLambda a ++ " " ++ bracketed isNotVar b
       where
         isLambda (Lambda _ _) = True
         isLambda _            = False
@@ -31,12 +31,12 @@ data LambdaDB = DBVar Integer
 instance Show LambdaDB where
     show (DBVar n)   = show n
     show (LambdaD e) = "(\\" ++ show e ++ ")"
-    show (a :++ b)  = "(" ++ show a ++ " " ++ show b ++ ")"
+    show (a :++ b)   = "(" ++ show a ++ " " ++ show b ++ ")"
 
 free :: Lambda -> [VarName]
 free (Var v)      = [v]
 free (Lambda v e) = filter (not . (== v)) $ free e
-free (a :+ b)    = free a ++ free b
+free (a :+ b)     = free a ++ free b
 
 type DBContext = [(VarName, Integer)]
 
@@ -63,14 +63,14 @@ notInContext context = head $ filter (not . inContext) $ varAndTicks
 
 toDB :: DBContext -> Lambda -> LambdaDB
 toDB context (Var v)      = DBVar $ getNum v context
-toDB context (a :+ b)    = toDB context a :++ toDB context b
+toDB context (a :+ b)     = toDB context a :++ toDB context b
 toDB context (Lambda v e) = LambdaD $ toDB newContext e
   where
     newContext = (v, 0) : inc context
 
 fromDB :: DBContext -> LambdaDB -> Lambda
 fromDB context (DBVar n)   = Var $ getVar n context
-fromDB context (a :++ b)  = fromDB context a :+ fromDB context b
+fromDB context (a :++ b)   = fromDB context a :+ fromDB context b
 fromDB context (LambdaD e) = Lambda v $ fromDB newContext e
   where
     v = notInContext $ map fst context
