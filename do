@@ -7,4 +7,4 @@ then
     exit
 fi
 
-./run
+./run $@

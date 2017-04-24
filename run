@@ -1,3 +1,3 @@
 #!/bin/sh
 
-stack exec TT-exe
+stack exec TT-exe -- $1

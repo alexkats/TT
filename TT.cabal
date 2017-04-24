@@ -10,6 +10,8 @@ executable TT-exe
   other-modules:       Evaluation
                      , Expression
                      , Grammar
+                     , Parser
+                     , Subs
                      , TypeInference
                      , Utils
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
